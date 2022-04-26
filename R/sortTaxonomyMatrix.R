@@ -36,18 +36,12 @@ sortTaxonomyMatrix4Id <- function(idList = NULL, refspec = NULL) {
     write.table(
         idList,
         file  = "tmp.idList",
-        col.names = FALSE,
-        row.names = FALSE,
-        quote = FALSE,
-        sep = "\t"
+        col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t"
     )
     write.table(
         rankList,
         file = "tmp.rankList",
-        col.names = FALSE,
-        row.names = FALSE,
-        quote = FALSE,
-        sep = "\t"
+        col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t"
     )
     
     # create taxonomy matrix (taxonomyMatrix.txt)
@@ -65,12 +59,16 @@ sortTaxonomyMatrix4Id <- function(idList = NULL, refspec = NULL) {
     distDf <- subset(taxMatrix, select = -c(ncbiID, fullName))
     row.names(distDf) <- distDf$abbrName
     distDf <- distDf[, -1]
-    taxaTree <- PhyloProfile::createRootedTree(distDf, as.character(repTaxon$abbrName))
+    taxaTree <- PhyloProfile::createRootedTree(
+        distDf, as.character(repTaxon$abbrName)
+    )
     taxonList <- PhyloProfile::sortTaxaFromTree(taxaTree)
     sortedTaxMatrix <- taxMatrix[match(taxonList, taxMatrix$abbrName), ]
     selectedCols <- c(
         "fullName",
-        colnames(sortedTaxMatrix)[colnames(sortedTaxMatrix) %in% taxFun::getAllTaxonomyRanks()]
+        colnames(sortedTaxMatrix)[
+            colnames(sortedTaxMatrix) %in% taxFun::getAllTaxonomyRanks()
+        ]
     )
     sortedTaxMatrix <- sortedTaxMatrix[, selectedCols]
     return(sortedTaxMatrix)
@@ -95,6 +93,8 @@ sortTaxonomyMatrix4Name <- function(nameList = NULL, refspec = NULL) {
     if (is.null(refspec)) stop("A reference species muss be specified")
     
     idsDf <- name2id(nameList)
+    if (nrow(idsDf) < 1) stop("Input file contains all invalid taxon names")
+    
     sortedTaxMatrix <- sortTaxonomyMatrix4Id(idsDf$ncbiID, refspec)
     return(sortedTaxMatrix)
 }

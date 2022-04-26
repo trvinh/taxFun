@@ -20,6 +20,7 @@
 # RStudio files
 .Rproj.user/
 *.Rproj
+.Rbuildignore
 
 # produced vignettes
 vignettes/*.html
@@ -42,3 +43,5 @@ vignettes/*.pdf
 # test output
 tests/testthat/_snaps
 tests/testthat/*.out
+tests/testthat/ids.txt.*
+tests/testthat/names.txt.*

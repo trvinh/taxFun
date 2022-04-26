@@ -3,8 +3,7 @@
 #' @importFrom ape root
 #' @param idList list of taxonomy IDs
 #' @param outgroup a taxon used for rooting
-#' @return A dataframe contains input taxon Ids, their full names and the 
-#' corresponding ranks
+#' @return A taxonomy tree as phylo object
 #' @author Vinh Tran {tran@bio.uni-frankfurt.de}
 #' @examples
 #' idList <- c("9606", "5207", "40674", "4751")
@@ -39,8 +38,7 @@ getTree4Id <- function(idList = NULL, outgroup = NULL) {
 #' @importFrom ape root
 #' @param nameList list of taxonomy names
 #' @param outgroup a taxon used for rooting
-#' @return A dataframe contains input taxon Ids, their full names and the 
-#' corresponding ranks
+#' @return A taxonomy tree as phylo object
 #' @author Vinh Tran {tran@bio.uni-frankfurt.de}
 #' @examples
 #' nameList <- c("Homo sapiens", "fungi", "mammalia", "Cryptococcus neoformans")
