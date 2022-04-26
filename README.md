@@ -33,9 +33,16 @@ From the R terminal, enter:
 library(taxFun)
 ```
 
-to load *taxFun* package. Then to learn about *taxFun* functions please use this command
+to load *taxFun* package. 
+
+*taxFun* command has this structure
 ```r
-?taxFun
+taxFun(function_name, input, options, output)
+```
+
+To learn about the options for each *taxFun* function, please use this command
+```r
+?taxFun::function_name()
 ```
 
 # Functions
@@ -62,6 +69,8 @@ These are the list of available functions in *taxFun* and their parameters
 | getRepresentative | coming soon | coming soon | coming soon |
 
 *If not specified, output file will be saved as `input.*`*
+
+To learn about 
 
 For example:
 
