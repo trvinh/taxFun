@@ -61,7 +61,7 @@ These are the list of available functions in *taxFun* and their parameters
 | getTree4Name | List of taxon names | Tree file in newick format | Outgroup species for rooting (Optional) |
 | getRepresentative | coming soon | coming soon | coming soon |
 
-*If not specified, output file will be saved as `input.out`*
+*If not specified, output file will be saved as `input.*`*
 
 For example:
 
