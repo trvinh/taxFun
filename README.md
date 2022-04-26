@@ -73,14 +73,23 @@ These are the list of available functions in *taxFun* and their parameters
 For example:
 
 ```r
-# convert IDs to names
+# specify list of taxon IDs and names
 idFile <- "inst/ids.txt"
+nameFile <- "inst/names.txt"
+
+# convert IDs to names
 taxFun(id2name, idFile)
 
 # get names of class, family and phylum for a list of given taxon names
-nameFile <- "inst/names.txt"
 selectedRanks <- c("class", "family", "phylum")
 taxFun(getRanks4name, nameFile, ranks = selectedRanks)
+
+# create an aligned taxonomy hierarchies for a list of taxon IDs
+taxFun(sortTaxonomyMatrix4Id, idFile, refspec = "Homo sapiens")
+
+# create taxonomy tree rooted by an outgroup species
+taxFun(getTree4Name, nameFile, outgroup = "Homo sapiens")
+
 ```
 
 # Bugs
