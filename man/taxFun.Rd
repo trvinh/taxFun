@@ -9,6 +9,7 @@ taxFun(
   inputListFile = NULL,
   ranks = NULL,
   refspec = NULL,
+  outgroup = NULL,
   outputFile = NULL
 )
 }
@@ -21,6 +22,9 @@ taxFun(
 \item{ranks}{List of taxonomy ranks of interest (OPTIONAL)}
 
 \item{refspec}{Reference species (REQUIRED for some functions)}
+
+\item{outgroup}{Output species used for rooting the tree (OPTIONAL for tree
+functions)}
 
 \item{outputFile}{Location of output file. If not given, it will be saved as
 <inputFile.out>}

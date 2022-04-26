@@ -12,7 +12,7 @@ Depends: R (>= 4.1.0)
 Encoding: UTF-8
 biocViews: Software
 Imports:
-    data.table, PhyloProfile, taxize, tidyr
+    ape, data.table, PhyloProfile, taxize, tidyr
 RoxygenNote: 7.1.2
 Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr

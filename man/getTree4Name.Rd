@@ -4,10 +4,12 @@
 \alias{getTree4Name}
 \title{create taxonomy tree for a list of taxon names}
 \usage{
-getTree4Name(nameList = NULL)
+getTree4Name(nameList = NULL, outgroup = NULL)
 }
 \arguments{
 \item{nameList}{list of taxonomy names}
+
+\item{outgroup}{a taxon used for rooting}
 }
 \value{
 A dataframe contains input taxon Ids, their full names and the 
@@ -18,7 +20,7 @@ create taxonomy tree for a list of taxon names
 }
 \examples{
 nameList <- c("Homo sapiens", "fungi", "mammalia", "Cryptococcus neoformans")
-tree <- getTree4Name(nameList)
+tree <- getTree4Name(nameList, "Fungi")
 plot(tree)
 }
 \author{

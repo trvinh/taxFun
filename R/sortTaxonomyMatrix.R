@@ -54,6 +54,8 @@ sortTaxonomyMatrix4Id <- function(idList = NULL, refspec = NULL) {
     taxMatrix <- PhyloProfile::taxonomyTableCreator(
         "tmp.idList", "tmp.rankList"
     )
+    unlink("tmp.idList")
+    unlink("tmp.rankList")
     
     # cluster taxonomy matrix
     # get full taxonomy data & representative taxon

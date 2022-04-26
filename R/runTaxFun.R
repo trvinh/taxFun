@@ -1,10 +1,13 @@
 #' Run taxFun
 #' @export
 #' @importFrom utils read.csv
+#' @importFrom ape write.tree
 #' @param fnName Function name, either "id2name", "name2id", "id2rank", 
 #' "name2rank", "getRanks4Name", "getRanks4Id", or "getAllTaxonomyRanks"
 #' @param ranks List of taxonomy ranks of interest (OPTIONAL)
 #' @param refspec Reference species (REQUIRED for some functions)
+#' @param outgroup Output species used for rooting the tree (OPTIONAL for tree
+#' functions)
 #' @param inputListFile Location of input file (list of taxon names or ids)
 #' @param outputFile Location of output file. If not given, it will be saved as
 #' <inputFile.out>
@@ -23,7 +26,7 @@
 
 taxFun <- function(
     fnName = NULL, inputListFile = NULL, 
-    ranks = NULL, refspec = NULL,
+    ranks = NULL, refspec = NULL, outgroup = NULL,
     outputFile = NULL
 ) {
     if (is.null(inputListFile)) stop("No input file given!")
@@ -99,6 +102,14 @@ taxFun <- function(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
+    } else if (fnName == "getTree4Id") {
+        outTree <- getTree4Id(inputList, outgroup)
+        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".tree")
+        ape::write.tree(outTree, file = outputFile)
+    } else if (fnName == "getTree4Name") {
+        outTree <- getTree4Name(inputList, outgroup)
+        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".tree")
+        ape::write.tree(outTree, file = outputFile)
     } else {
         stop("Wrong function name")
     }
