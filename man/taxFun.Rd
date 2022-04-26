@@ -4,18 +4,11 @@
 \alias{taxFun}
 \title{Run taxFun}
 \usage{
-taxFun(
-  fnName = NULL,
-  inputListFile = NULL,
-  ranks = NULL,
-  refspec = NULL,
-  outgroup = NULL,
-  outputFile = NULL
-)
+taxFun(fnName, inputListFile, ranks, refspec, outgroup, outputFile)
 }
 \arguments{
-\item{fnName}{Function name, either "id2name", "name2id", "id2rank", 
-"name2rank", "getRanks4Id", "getRanks4Name", "sortTaxonomyMatrix4Id", 
+\item{fnName}{Function name, either "id2name", "name2id", "id2rank",
+"name2rank", "getRanks4Id", "getRanks4Name", "sortTaxonomyMatrix4Id",
 "sortTaxonomyMatrix4Name", "getTree4Id", "getTree4Name" or
 "getAllTaxonomyRanks"}
 
@@ -31,11 +24,14 @@ functions)}
 \item{outputFile}{Location of output file. If not given, it will be saved as
 <inputFile.out>}
 }
+\value{
+Output file
+}
 \description{
 Run taxFun
 }
 \examples{
-\dontrun{
+\donttest{
 inputListId <- system.file(
     "extdata", "ids.txt", package = "taxFun", mustWork = TRUE
 )

@@ -1,0 +1,120 @@
+---
+title: "taxFun"
+author:
+-   name: Vinh Tran
+    affiliation: Goethe University Frankfurt, Frankfurt am Main, Germany
+    email: tran@bio.uni-frankfurt.de
+date: "`r Sys.Date()`"
+output:
+    BiocStyle::html_document:
+        toc_float: true
+        number_sections: false
+package: taxFun
+abstract: |
+    taxFun: A set of functions for working with NCBI taxonomy database
+vignette: >
+    %\VignetteIndexEntry{taxFun}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    library(taxFun),
+    collapse = TRUE,
+    comment = "#>",
+    dev = 'png',
+    crop = NULL
+)
+```
+
+# Introduction
+Phylogenetic profiles capture the presence - absence pattern of genes across
+species (Pellegrini et al., 1999). The presence of an ortholog in a given
+species is often taken as evidence that also the corresponding function is
+represented (Lee et al., 2007). Moreover, if two genes agree in their
+phylogenetic profile, it can suggest that they functionally interact
+(Pellegrini et al., 1999). Phylogenetic profiles are therefore commonly used
+for tracing functional protein clusters or metabolic networks across species
+and through time. However, orthology inference is not error-free (Altenhoff
+et al., 2016), and orthology does not guarantee functional equivalence for
+two genes (Studer and Robinson-Rechavi, 2009). Therefore, phylogenetic
+profiles are often integrated with accessory information layers, such as
+sequence similarity, domain architecture similarity, or semantic similarity
+of Gene Ontology-term descriptions.
+
+Various approaches exist to visualize such profiles. However, there is still a
+shortage of tools that provide a comprehensive set of functions for the display,
+filtering and analysis of multi-layered phylogenetic profiles comprising
+hundreds of genes and taxa. To close this methodological gap, we present here
+**PhyloProfile**, an *R-based tool to visualize, explore and analyze
+multi-layered phylogenetic profiles*.
+
+# How to install taxFun
+
+
+
+# Input
+
+
+# Features and capabilities
+
+# Examples
+
+**More examples? Please tell us what you want to see ;-)**
+
+# How to cite
+>Ngoc-Vinh Tran, Bastian Greshake Tzovaras, Ingo Ebersberger, PhyloProfile:
+dynamic visualization and exploration of multi-layered phylogenetic profiles,
+Bioinformatics, Volume 34, Issue 17, 01 September 2018, Pages 3041–3043,
+https://doi.org/10.1093/bioinformatics/bty225
+
+Or use the citation function in R CMD to have the citation in BibTex or
+LaTeX format
+
+```{r}
+citation("taxFun")
+```
+
+# How to contribute
+
+Thank you so much for your interest in contributing to *taxFun*! 🎉👍🍾
+
+Contributions to *taxFun* can take many forms. If you are
+
+**biologist**, you can
+* [report bugs](https://github.com/trvinh/taxFun/issues/new),
+* [tell us about what features you would love to see](shorturl.at/dgrsO),
+* improve our documentation, both
+[in the Wiki](https://github.com/trvinh/taxFun/wiki) and in our
+[README](https://github.com/trvinh/taxFun/blob/master/README.md),
+* discuss about [non-coding issues](shorturl.at/hnDTX)
+
+**biologist and love coding**, you can
+* [fix existing bugs](https://github.com/trvinh/taxFun/issues/),
+* or add new features,
+* or basically whatever great idea you have!
+* and all points for non-coding contributors as well :)
+
+**not biologist but can code**, it would be great if you can
+* test the tool in different environments (Windows, Linux, Mac - Firefox,
+Chrome, IE, Safari,...)
+* suggest a better user interface
+* improve the code quality
+
+Don't hesitate to get in touch with us if you have any questions. You can
+contact us at [tran@bio.uni-frankfurt.de](mailto:tran@bio.uni-frankfurt.de)
+
+## Contributors {.unnumbered}
+- [Vinh Tran](https://github.com/trvinh)
+
+# SessionInfo()
+
+Here is the output of `sessionInfo()` on the system on which this document was
+compiles:
+
+```{r sessionInfo, echo = FALSE}
+sessionInfo(package = "taxFun")
+```
+
+# References

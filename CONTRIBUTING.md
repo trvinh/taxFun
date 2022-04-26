@@ -14,10 +14,8 @@ Contributions to *taxFun* can take many forms. If you are
 
 **biologist and love coding**, you can
 * [fix existing bugs](https://github.com/trvinh/taxFun/issues/),
-* or add new features. Some things we'd love to see are
-  * add scripts to add out-of-the-box support for further orthology prediction tools,
-  * increasing the test coverage from 0% to something above that,
-  * or basically whatever great idea you have!
+* or add new features,
+* or basically whatever great idea you have!
 * and all points for non-coding contributors as well :)
 
 **not biologist but can code**, it would be great if you can

@@ -9,11 +9,11 @@ getRanks4Id(idList = NULL, ranks = NULL)
 \arguments{
 \item{idList}{list of taxonomy IDs}
 
-\item{ranks}{list of defined ranks. If not given, all available ranks will 
+\item{ranks}{list of defined ranks. If not given, all available ranks will
 be considered}
 }
 \value{
-A dataframe contains input taxon Ids, their full names and names of 
+A dataframe contains input taxon Ids, their full names and names of
 defined taxonomy ranks
 }
 \description{

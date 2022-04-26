@@ -2,8 +2,9 @@
 #' @export
 #' @importFrom utils read.csv
 #' @importFrom ape write.tree
-#' @param fnName Function name, either "id2name", "name2id", "id2rank", 
-#' "name2rank", "getRanks4Id", "getRanks4Name", "sortTaxonomyMatrix4Id", 
+#' @usage taxFun(fnName, inputListFile, ranks, refspec, outgroup, outputFile)
+#' @param fnName Function name, either "id2name", "name2id", "id2rank",
+#' "name2rank", "getRanks4Id", "getRanks4Name", "sortTaxonomyMatrix4Id",
 #' "sortTaxonomyMatrix4Name", "getTree4Id", "getTree4Name" or
 #' "getAllTaxonomyRanks"
 #' @param ranks List of taxonomy ranks of interest (OPTIONAL)
@@ -13,8 +14,9 @@
 #' @param inputListFile Location of input file (list of taxon names or ids)
 #' @param outputFile Location of output file. If not given, it will be saved as
 #' <inputFile.out>
+#' @return Output file
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' inputListId <- system.file(
 #'     "extdata", "ids.txt", package = "taxFun", mustWork = TRUE
 #' )
@@ -27,7 +29,7 @@
 #' }
 
 taxFun <- function(
-    fnName = NULL, inputListFile = NULL, 
+    fnName = NULL, inputListFile = NULL,
     ranks = NULL, refspec = NULL, outgroup = NULL,
     outputFile = NULL
 ) {
@@ -37,7 +39,7 @@ taxFun <- function(
         inputListFile, stringsAsFactors = FALSE, header = FALSE
     )
     inputList <- inputListDf$V1
-    
+
     ### perform function
     if (fnName == "id2name") {
         outDf <- id2name(inputList)
@@ -90,7 +92,7 @@ taxFun <- function(
         )
     } else if (fnName == "sortTaxonomyMatrix4Id") {
         outDf <- sortTaxonomyMatrix4Id(inputList, refspec)
-        if (is.null(outputFile)) 
+        if (is.null(outputFile))
             outputFile <- paste0(inputListFile, ".sortedTaxonomyMatrix")
         write.table(
             outDf, file = outputFile,
@@ -98,7 +100,7 @@ taxFun <- function(
         )
     } else if (fnName == "sortTaxonomyMatrix4Name") {
         outDf <- sortTaxonomyMatrix4Name(inputList, refspec)
-        if (is.null(outputFile)) 
+        if (is.null(outputFile))
             outputFile <- paste0(inputListFile, ".sortedTaxonomyMatrix")
         write.table(
             outDf, file = outputFile,

@@ -1,5 +1,6 @@
-#' Create a clistered taxonomy matrix for a list of taxon IDs, sorted based on
-#' a defined reference species
+#' Create a clustered taxonomy matrix for a list of taxon IDs
+#' @description Create a clustered taxonomy matrix for a list of taxon IDs, 
+#' sorted based on a defined reference species
 #' @export
 #' @param idList list of taxonomy IDs
 #' @param refspec reference taxon
@@ -13,25 +14,18 @@ sortTaxonomyMatrix4Id <- function(idList = NULL, refspec = NULL) {
     if (is.null(idList)) stop("No list of taxon IDs given!")
     if (is.null(refspec)) stop("A reference species muss be specified")
     ncbiID <- fullName <- NULL
-    
-    # convert refspec from ID to name (if needed)
     refspecTmp <- suppressWarnings(as.numeric(refspec))
     if (!is.na(refspecTmp)) {
         refspecDf <- id2name(refspecTmp)
         refspec <- refspecDf$fullName
     }
-        
-    # get preprocessed taxonomy DB
     currentNCBIinfo <- getPreTaxonomyFile()
-    # parse tax info
     print("Parsing taxonomy info...")
     newTaxInfo <- PhyloProfile::getIDsRank(
         inputTaxa = idList, currentNCBIinfo = currentNCBIinfo
     )
     rankList <- as.data.frame(newTaxInfo[2])
     idList <- as.data.frame(newTaxInfo[1])
-    
-    # write output files
     print("Output temp files...")
     write.table(
         idList,
@@ -43,19 +37,12 @@ sortTaxonomyMatrix4Id <- function(idList = NULL, refspec = NULL) {
         file = "tmp.rankList",
         col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t"
     )
-    
-    # create taxonomy matrix (taxonomyMatrix.txt)
     taxMatrix <- PhyloProfile::taxonomyTableCreator(
         "tmp.idList", "tmp.rankList"
     )
     unlink("tmp.idList")
     unlink("tmp.rankList")
-    
-    # cluster taxonomy matrix
-    # get full taxonomy data & representative taxon
     repTaxon <- taxMatrix[taxMatrix$fullName == refspec, ][1, ]
-
-    # THEN, SORT TAXON LIST BASED ON TAXONOMY TREE
     distDf <- subset(taxMatrix, select = -c(ncbiID, fullName))
     row.names(distDf) <- distDf$abbrName
     distDf <- distDf[, -1]
@@ -74,8 +61,9 @@ sortTaxonomyMatrix4Id <- function(idList = NULL, refspec = NULL) {
     return(sortedTaxMatrix)
 }
 
-#' Create a clistered taxonomy matrix for a list of taxon names, sorted based on
-#' a defined reference species
+#' Create a clustered taxonomy matrix for a list of taxon names
+#' @description Create a clustered taxonomy matrix for a list of taxon names, 
+#' sorted based on a defined reference species
 #' @export
 #' @param nameList list of taxonomy names
 #' @param refspec reference taxon

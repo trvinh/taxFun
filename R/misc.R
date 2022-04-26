@@ -19,7 +19,7 @@ getAllTaxonomyRanks <- function() {
 
 getPreTaxonomyFile <- function() {
     ncbiFilein <- paste0(
-        find.package("PhyloProfile"), 
+        find.package("PhyloProfile"),
         "/PhyloProfile/data/preProcessedTaxonomy.txt"
     )
     if (file.exists(ncbiFilein)) {
@@ -57,4 +57,3 @@ firstup <- function(x) {
     substr(x, 1, 1) <- toupper(substr(x, 1, 1))
     x
 }
-

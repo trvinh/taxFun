@@ -2,8 +2,7 @@
 % Please edit documentation in R/sortTaxonomyMatrix.R
 \name{sortTaxonomyMatrix4Name}
 \alias{sortTaxonomyMatrix4Name}
-\title{Create a clistered taxonomy matrix for a list of taxon names, sorted based on
-a defined reference species}
+\title{Create a clustered taxonomy matrix for a list of taxon names}
 \usage{
 sortTaxonomyMatrix4Name(nameList = NULL, refspec = NULL)
 }
@@ -16,8 +15,8 @@ sortTaxonomyMatrix4Name(nameList = NULL, refspec = NULL)
 A dataframe contains clustered taxonomy matrix
 }
 \description{
-Create a clistered taxonomy matrix for a list of taxon names, sorted based on
-a defined reference species
+Create a clustered taxonomy matrix for a list of taxon names, 
+sorted based on a defined reference species
 }
 \examples{
 nameList <- c(

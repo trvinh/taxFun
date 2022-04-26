@@ -10,7 +10,7 @@ name2rank(nameList = NULL)
 \item{nameList}{list of taxonomy names}
 }
 \value{
-A dataframe contains input taxon names, their IDs and the 
+A dataframe contains input taxon names, their IDs and the
 corresponding ranks
 }
 \description{

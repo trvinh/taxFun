@@ -10,7 +10,7 @@ id2rank(idList = NULL)
 \item{idList}{list of taxonomy IDs}
 }
 \value{
-A dataframe contains input taxon Ids, their full names and the 
+A dataframe contains input taxon Ids, their full names and the
 corresponding ranks
 }
 \description{
