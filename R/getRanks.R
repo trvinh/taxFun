@@ -40,7 +40,6 @@ name2rank <- function(nameList = NULL) {
 }
 
 #' Get taxonomy hierarchy string for a list of taxon IDs
-#' @export
 #' @import data.table
 #' @description Get NCBI taxonomy IDs, ranks and names for an input taxon list.
 #' @param inputTaxa NCBI ID list of input taxa.
@@ -49,9 +48,11 @@ name2rank <- function(nameList = NULL) {
 #' @return A list of taxonomy hierarchy vector for input taxon IDs
 #' @author Vinh Tran {tran@bio.uni-frankfurt.de}
 #' @examples
+#' \dontrun{
 #' inputTaxa <- c("272557", "176299")
 #' preProcessedTaxonomy <- getPreTaxonomyFile()
 #' getHierarchy(inputTaxa, preProcessedTaxonomy)
+#' }
 
 getHierarchy <- function(inputTaxa = NULL, currentNCBIinfo = NULL){
     if (is.null(currentNCBIinfo)) stop("Pre-processed NCBI tax data is NULL!")

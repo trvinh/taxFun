@@ -39,5 +39,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-# test snaps
+# test output
 tests/testthat/_snaps
+tests/testthat/*.out
