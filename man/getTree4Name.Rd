@@ -12,8 +12,7 @@ getTree4Name(nameList = NULL, outgroup = NULL)
 \item{outgroup}{a taxon used for rooting}
 }
 \value{
-A dataframe contains input taxon Ids, their full names and the 
-corresponding ranks
+A taxonomy tree as phylo object
 }
 \description{
 create taxonomy tree for a list of taxon names
