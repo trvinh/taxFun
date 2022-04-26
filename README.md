@@ -55,6 +55,8 @@ These are the list of available functions in *taxFun* and their parameters
 | name2rank | List of taxon names | A table containing input taxon names and their taxonomy ranks | None |
 | getRanks4Id | List of taxon IDs | A table containing input taxon IDs, their scientific names and the names of selected taxonomy ranks | List of selected taxonomy ranks (Options: if not given, all possible taxonomy ranks will be considered) |
 | getRanks4Name | List of taxon names | A table containing input taxon names, their taxon IDs and the names of selected taxonomy ranks | List of selected taxonomy ranks (Options: if not given, all possible taxonomy ranks will be considered) |
+| sortTaxonomyMatrix4Id | List of taxon IDs | A clustered taxonomy matrix, shorted by a selected reference species | A specified reference species |
+| sortTaxonomyMatrix4Name | List of taxon names | A clustered taxonomy matrix, shorted by a selected reference species | A specified reference species |
 | getRepresentative | coming soon | coming soon | coming soon |
 | getTree | coming soon | coming soon | coming soon |
 

@@ -4,7 +4,13 @@
 \alias{taxFun}
 \title{Run taxFun}
 \usage{
-taxFun(fnName = NULL, inputListFile = NULL, ranks = NULL, outputFile = NULL)
+taxFun(
+  fnName = NULL,
+  inputListFile = NULL,
+  ranks = NULL,
+  refspec = NULL,
+  outputFile = NULL
+)
 }
 \arguments{
 \item{fnName}{Function name, either "id2name", "name2id", "id2rank", 
@@ -13,6 +19,8 @@ taxFun(fnName = NULL, inputListFile = NULL, ranks = NULL, outputFile = NULL)
 \item{inputListFile}{Location of input file (list of taxon names or ids)}
 
 \item{ranks}{List of taxonomy ranks of interest (OPTIONAL)}
+
+\item{refspec}{Reference species (REQUIRED for some functions)}
 
 \item{outputFile}{Location of output file. If not given, it will be saved as
 <inputFile.out>}
