@@ -1,0 +1,18 @@
+Package: taxFun
+Version: 0.99.0
+Date: 2022-04-26
+Title: taxFun
+Authors@R: c(
+    person("Vinh", "Tran", role = c("aut", "cre"), email = "tran@bio.uni-frankfurt.de"))
+Description: A set of functions for working with NCBI taxonomy.
+URL: https://github.com/trvinh/taxFun/
+BugReports: https://github.com/trvinh/taxFun/issues
+License: MIT + file LICENSE
+Depends: R (>= 4.1.0)
+Encoding: UTF-8
+biocViews: Software
+Imports:
+    data.table, PhyloProfile, tidyr
+RoxygenNote: 7.1.2
+Suggests: knitr, rmarkdown, testthat
+VignetteBuilder: knitr
