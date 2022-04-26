@@ -46,7 +46,7 @@ taxFun(function, input, options, output)
 These are the list of available functions in *taxFun* and their parameters
 
 | Function name | Main input | Output | Other options |
-|---|---|---|
+|---|---|---|---|
 | getAllTaxonomyRanks | None | A list of all available NCBI taxonomy ranks | None |
 | id2name | List of taxon IDs | A table containing input taxon IDs and their scientific names | None |
 | name2id | List of taxon names | A table containing input taxon names and their taxon IDs | None |
