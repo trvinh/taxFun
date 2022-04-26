@@ -46,10 +46,6 @@ To learn about the options for each *taxFun* function, please use this command
 ```
 
 # Functions
-*taxFun* command has this structure
-```r
-taxFun(function_name, input, options, output)
-```
 
 These are the list of available functions in *taxFun* and their parameters
 
