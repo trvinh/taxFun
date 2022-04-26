@@ -70,8 +70,6 @@ These are the list of available functions in *taxFun* and their parameters
 
 *If not specified, output file will be saved as `input.*`*
 
-To learn about 
-
 For example:
 
 ```r
