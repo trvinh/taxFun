@@ -6,7 +6,7 @@
 * [Installation &amp; Usage](#installation--usage)
 * [Functions](#functions)
 * [Bugs](#bugs)
-* [Code of Conduct &amp; License](#code-of-conduct--license)
+* [License](#license)
 * [Contact](#contact)
 
 # Installation & Usage
@@ -40,7 +40,7 @@ to load *taxFun* package. Then to learn about *taxFun* functions please use this
 # Functions
 *taxFun* command has this structure
 ```r
-taxFun(function, input, options, output)
+taxFun(function_name, input, options, output)
 ```
 
 These are the list of available functions in *taxFun* and their parameters
@@ -55,7 +55,7 @@ These are the list of available functions in *taxFun* and their parameters
 | getRanks4Id | List of taxon IDs | A table containing input taxon IDs, their scientific names and the names of selected taxonomy ranks | List of selected taxonomy ranks (Options: if not given, all possible taxonomy ranks will be considered) |
 | getRanks4Name | List of taxon names | A table containing input taxon names, their taxon IDs and the names of selected taxonomy ranks | List of selected taxonomy ranks (Options: if not given, all possible taxonomy ranks will be considered) |
 
-*If not specified, output file will be saved as _input.out_*
+*If not specified, output file will be saved as `input.out`*
 
 For example:
 
@@ -72,16 +72,6 @@ taxFun(getRanks4name, nameFile, ranks = selectedRanks)
 
 # Bugs
 Any [bug reports or comments, suggestions](https://github.com/BIONF/PhyloProfile/blob/master/CONTRIBUTING.md) are highly appreciated. Please [open an issue on GitHub](https://github.com/BIONF/PhyloProfile/issues/new) or be in touch via email.
-
-# Acknowledgements
-We would like to thank
-1) [Bastian](https://github.com/gedankenstuecke) for the great initial idea and his kind support,
-2) Members of [Ebersberger group](http://www.bio.uni-frankfurt.de/43045195/ak-ebersberger) for many valuable suggestions and ...bug reports :)
-
-# Contributors
-* [Vinh](https://github.com/trvinh)
-* [Bastian](https://github.com/gedankenstuecke)
-* [Carla](https://github.com/CarlaMoelbert)
 
 # License
 This tool is released under [MIT license](https://github.com/BIONF/PhyloProfile/blob/master/LICENSE).
