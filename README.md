@@ -7,6 +7,7 @@
 * [Functions](#functions)
 * [Bugs](#bugs)
 * [License](#license)
+* [How-to-cite](#how-to-cite)
 * [Contact](#contact)
 
 # Installation & Usage
@@ -77,11 +78,9 @@ Any [bug reports or comments, suggestions](https://github.com/BIONF/PhyloProfile
 This tool is released under [MIT license](https://github.com/BIONF/PhyloProfile/blob/master/LICENSE).
 
 # How-To Cite
-Ngoc-Vinh Tran, Bastian Greshake Tzovaras, Ingo Ebersberger, PhyloProfile: dynamic visualization and exploration of multi-layered phylogenetic profiles, Bioinformatics, Volume 34, Issue 17, 01 September 2018, Pages 3041–3043, https://doi.org/10.1093/bioinformatics/bty225
-
-or use the citation function in R CMD to have it directly in BibTex or LaTeX format
+Use the citation function in R CMD to have it directly in BibTex or LaTeX format
 ```r
-citation("PhyloProfile")
+citation("taxFun")
 ```
 # Contact
 Vinh Tran
