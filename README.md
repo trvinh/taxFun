@@ -55,6 +55,21 @@ These are the list of available functions in *taxFun* and their parameters
 | getRanks4Id | List of taxon IDs | A table containing input taxon IDs, their scientific names and the names of selected taxonomy ranks | List of selected taxonomy ranks (Options: if not given, all possible taxonomy ranks will be considered) |
 | getRanks4Name | List of taxon names | A table containing input taxon names, their taxon IDs and the names of selected taxonomy ranks | List of selected taxonomy ranks (Options: if not given, all possible taxonomy ranks will be considered) |
 
+*If not specified, output file will be saved as _input.out_*
+
+For example:
+
+```r
+# convert IDs to names
+idFile <- "inst/ids.txt"
+taxFun(id2name, idFile)
+
+# get names of class, family and phylum for a list of given taxon names
+nameFile <- "inst/names.txt"
+selectedRanks <- c("class", "family", "phylum")
+taxFun(getRanks4name, nameFile, ranks = selectedRanks)
+```
+
 # Bugs
 Any [bug reports or comments, suggestions](https://github.com/BIONF/PhyloProfile/blob/master/CONTRIBUTING.md) are highly appreciated. Please [open an issue on GitHub](https://github.com/BIONF/PhyloProfile/issues/new) or be in touch via email.
 
