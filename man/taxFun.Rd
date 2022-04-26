@@ -15,7 +15,9 @@ taxFun(
 }
 \arguments{
 \item{fnName}{Function name, either "id2name", "name2id", "id2rank", 
-"name2rank", "getRanks4Name", "getRanks4Id", or "getAllTaxonomyRanks"}
+"name2rank", "getRanks4Id", "getRanks4Name", "sortTaxonomyMatrix4Id", 
+"sortTaxonomyMatrix4Name", "getTree4Id", "getTree4Name" or
+"getAllTaxonomyRanks"}
 
 \item{inputListFile}{Location of input file (list of taxon names or ids)}
 

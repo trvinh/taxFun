@@ -3,7 +3,9 @@
 #' @importFrom utils read.csv
 #' @importFrom ape write.tree
 #' @param fnName Function name, either "id2name", "name2id", "id2rank", 
-#' "name2rank", "getRanks4Name", "getRanks4Id", or "getAllTaxonomyRanks"
+#' "name2rank", "getRanks4Id", "getRanks4Name", "sortTaxonomyMatrix4Id", 
+#' "sortTaxonomyMatrix4Name", "getTree4Id", "getTree4Name" or
+#' "getAllTaxonomyRanks"
 #' @param ranks List of taxonomy ranks of interest (OPTIONAL)
 #' @param refspec Reference species (REQUIRED for some functions)
 #' @param outgroup Output species used for rooting the tree (OPTIONAL for tree
