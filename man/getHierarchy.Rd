@@ -19,11 +19,9 @@ A list of taxonomy hierarchy vector for input taxon IDs
 Get NCBI taxonomy IDs, ranks and names for an input taxon list.
 }
 \examples{
-\dontrun{
 inputTaxa <- c("272557", "176299")
 preProcessedTaxonomy <- getPreTaxonomyFile()
-getHierarchy(inputTaxa, preProcessedTaxonomy)
-}
+taxFun:::getHierarchy(inputTaxa, preProcessedTaxonomy)
 }
 \author{
 Vinh Tran {tran@bio.uni-frankfurt.de}

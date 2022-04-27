@@ -4,15 +4,17 @@
 \alias{taxFun}
 \title{Run taxFun}
 \usage{
-taxFun(fnName, inputListFile, ranks, refspec, outgroup, outputFile)
+taxFun(fnName, inputListFile, rank, ranks, refspec, outgroup,
+outputFile)
 }
 \arguments{
-\item{fnName}{Function name, either "id2name", "name2id", "id2rank",
-"name2rank", "getRanks4Id", "getRanks4Name", "sortTaxonomyMatrix4Id",
-"sortTaxonomyMatrix4Name", "getTree4Id", "getTree4Name" or
-"getAllTaxonomyRanks"}
+\item{fnName}{Function name, either "id2name", "name2id", "getRank", 
+"getRanks", "sortTaxonomyMatrix", "createTree", "getRepresentative", 
+or "getAllTaxonomyRanks"}
 
 \item{inputListFile}{Location of input file (list of taxon names or ids)}
+
+\item{rank}{A selected taonomy rank (REQUIRED for some functions)}
 
 \item{ranks}{List of taxonomy ranks of interest (OPTIONAL)}
 
@@ -31,7 +33,6 @@ Output file
 Run taxFun
 }
 \examples{
-\donttest{
 inputListId <- system.file(
     "extdata", "ids.txt", package = "taxFun", mustWork = TRUE
 )
@@ -39,7 +40,9 @@ inputListName <- system.file(
     "extdata", "names.txt", package = "taxFun", mustWork = TRUE
 )
 taxFun("id2name", inputListId)
-taxFun("name2rank", inputListName)
-taxFun("getRanks4Name", inputListName, ranks = c("class", "phylum"))
-}
+taxFun("getRank", inputListName)
+taxFun("getRanks", inputListName, ranks = c("class", "phylum"))
+taxFun("createTree", inputListName, outgroup = 9606)
+taxFun("sortTaxonomyMatrix", inputListId, refspec = "Homo sapiens")
+taxFun("getRepresentative", inputListId, rank = "phylum")
 }

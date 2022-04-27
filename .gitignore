@@ -45,3 +45,5 @@ tests/testthat/_snaps
 tests/testthat/*.out
 tests/testthat/ids.txt.*
 tests/testthat/names.txt.*
+inst/extdata/ids.txt.*
+inst/extdata/names.txt.*

@@ -16,10 +16,8 @@ List of strings with the first character capitalized
 Capitalize the first character of string(s)
 }
 \examples{
-\dontrun{
 ll <- c("one", "tWO", "Three")
-firstup(ll)
-}
+taxFun:::firstup(ll)
 }
 \author{
 Vinh Tran {tran@bio.uni-frankfurt.de}

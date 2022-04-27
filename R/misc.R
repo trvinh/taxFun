@@ -23,7 +23,7 @@ getPreTaxonomyFile <- function() {
         "/PhyloProfile/data/preProcessedTaxonomy.txt"
     )
     if (file.exists(ncbiFilein)) {
-        print("Loading NCBI taxonomy file...")
+        # print("Loading NCBI taxonomy file...")
         preProcessedTaxonomy <- data.table::fread(ncbiFilein)
     } else {
         print("Download and process NCBI taxonomy files...")
@@ -48,12 +48,78 @@ getPreTaxonomyFile <- function() {
 #' @return List of strings with the first character capitalized
 #' @author Vinh Tran {tran@bio.uni-frankfurt.de}
 #' @examples
-#' \dontrun{
 #' ll <- c("one", "tWO", "Three")
-#' firstup(ll)
-#' }
+#' taxFun:::firstup(ll)
 
 firstup <- function(x) {
     substr(x, 1, 1) <- toupper(substr(x, 1, 1))
     x
+}
+
+#' Predict type (ID or NAME) for a list of input taxa
+#' @param inputList list of taxa
+#' @return ID or NAME
+#' @author Vinh Tran {tran@bio.uni-frankfurt.de}
+#' @examples
+#' ids <- c("123", 456, 789)
+#' taxFun:::predictType(ids)
+
+predictType <- function(inputList) {
+    tmp <- suppressWarnings(unlist(lapply(inputList, as.numeric)))
+    tmp <- tmp[!(is.na(tmp))]
+    if (length(tmp) == 0) return("NAME")
+    if (length(tmp) < length(inputList)) {
+        idList <- tmp
+        nameList <- inputList[!(inputList %in% idList)]
+        return(list(idList, nameList))
+    }
+    if (all(lapply(tmp, `%%`, 1) == 0)) return("ID")
+}
+
+
+#' Convert a list of input taxa into taxon IDs
+#' @param taxonList list of taxa
+#' @return A list of taxon IDs
+#' @author Vinh Tran {tran@bio.uni-frankfurt.de}
+#' @examples
+#' taxonList <- c("Homo sapiens", "5207", "40674", "4751")
+#' taxFun:::convert2id(taxonList)
+
+convert2id <- function(taxonList) {
+    type <- predictType(taxonList)
+    if (type[1] == "ID") {
+        idList <- taxonList
+    } else if (type[1] == "NAME") {
+        idDf <- name2id(taxonList)
+        idList <- idDf$ncbiID
+    } else {
+        warning("Input contains probably both taxon IDs and NAMEs!")
+        idDf <- name2id(type[[2]])
+        idList <- c(type[[1]], idDf$ncbiID)
+    }
+    return(idList)
+}
+
+
+#' Convert a list of input taxa into taxon names
+#' @param taxonList list of taxa
+#' @return A list of taxon names
+#' @author Vinh Tran {tran@bio.uni-frankfurt.de}
+#' @examples
+#' taxonList <- c("Homo sapiens", "5207", "40674", "4751")
+#' taxFun:::convert2name(taxonList)
+
+convert2name <- function(taxonList) {
+    type <- predictType(taxonList)
+    if (type[1] == "ID") {
+        nameDf <- id2name(taxonList)
+        nameList <- nameDf$fullName
+    } else if (type[1] == "NAME") {
+        nameList <- taxonList
+    } else {
+        warning("Input contains probably both taxon IDs and NAMEs!")
+        nameDf <- id2name(type[[1]])
+        nameList <- c(type[[2]], nameDf$fullName)
+    }
+    return(nameList)
 }

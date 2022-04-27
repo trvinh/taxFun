@@ -1,40 +1,21 @@
-#' Get taxonomy ranks for a list of taxon IDs
+#' Get taxonomy ranks for a list of taxa
 #' @export
-#' @param idList list of taxonomy IDs
+#' @param taxonList list of taxa
 #' @return A dataframe contains input taxon Ids, their full names and the
 #' corresponding ranks
 #' @author Vinh Tran {tran@bio.uni-frankfurt.de}
 #' @examples
-#' idList <- c("9606", "5207", "40674", "4751")
-#' id2rank(idList)
+#' taxonList <- c("Homo sapiens", "5207", "40674", "4751")
+#' getRank(taxonList)
 
-id2rank <- function(idList = NULL) {
-    if (is.null(idList)) stop("No list of taxon IDs given!")
+getRank <- function(taxonList = NULL) {
+    if (is.null(taxonList)) stop("No list of taxon IDs given!")
     preProcessedTaxonomy <- getPreTaxonomyFile()
+    # convert input to ID list
+    idList <- convert2id(taxonList)
     # get taxon ranks
     rankList <- preProcessedTaxonomy[
         preProcessedTaxonomy$ncbiID %in% idList, c("ncbiID", "fullName", "rank")
-    ]
-    return(rankList)
-}
-
-#' Get taxonomy ranks for a list of taxon names
-#' @export
-#' @param nameList list of taxonomy names
-#' @return A dataframe contains input taxon names, their IDs and the
-#' corresponding ranks
-#' @author Vinh Tran {tran@bio.uni-frankfurt.de}
-#' @examples
-#' nameList <- c("Homo sapiens", "fungi", "mammalia", "Cryptococcus neoformans")
-#' name2rank(nameList)
-
-name2rank <- function(nameList = NULL) {
-    if (is.null(nameList)) stop("No list of taxon names given!")
-    preProcessedTaxonomy <- getPreTaxonomyFile()
-    # get taxon ranks
-    rankList <- preProcessedTaxonomy[
-        preProcessedTaxonomy$fullName %in% firstup(nameList),
-        c("ncbiID", "fullName", "rank")
     ]
     return(rankList)
 }
@@ -48,11 +29,9 @@ name2rank <- function(nameList = NULL) {
 #' @return A list of taxonomy hierarchy vector for input taxon IDs
 #' @author Vinh Tran {tran@bio.uni-frankfurt.de}
 #' @examples
-#' \dontrun{
 #' inputTaxa <- c("272557", "176299")
 #' preProcessedTaxonomy <- getPreTaxonomyFile()
-#' getHierarchy(inputTaxa, preProcessedTaxonomy)
-#' }
+#' taxFun:::getHierarchy(inputTaxa, preProcessedTaxonomy)
 
 getHierarchy <- function(inputTaxa = NULL, currentNCBIinfo = NULL){
     if (is.null(currentNCBIinfo)) stop("Pre-processed NCBI tax data is NULL!")
@@ -90,74 +69,28 @@ getHierarchy <- function(inputTaxa = NULL, currentNCBIinfo = NULL){
     return(taxStringList)
 }
 
-#' Get defined taxonomy ranks for a list of taxon IDs
+#' Get defined taxonomy ranks for a list of taxa
 #' @export
 #' @import tidyr
-#' @param idList list of taxonomy IDs
+#' @param taxonList list of taxa
 #' @param ranks list of defined ranks. If not given, all available ranks will
 #' be considered
 #' @return A dataframe contains input taxon Ids, their full names and names of
 #' defined taxonomy ranks
 #' @author Vinh Tran {tran@bio.uni-frankfurt.de}
 #' @examples
-#' idList <- c("9606", "5207", "40674", "4751")
+#' taxonList <- c("Homo sapiens", "5207", "40674", "4751")
 #' ranks <- c("family", "class", "phylum", "kingdom")
-#' getRanks4Id(idList, ranks)
+#' getRanks(taxonList, ranks)
 
-getRanks4Id <- function(idList = NULL, ranks = NULL) {
-    if (is.null(idList)) stop("No list of taxon IDs given!")
+getRanks <- function(taxonList = NULL, ranks = NULL) {
+    if (is.null(taxonList)) stop("No list of taxon IDs given!")
     if (is.null(ranks)) ranks <- PhyloProfile::mainTaxonomyRank()
     ori <- name <- NULL
-
     preProcessedTaxonomy <- getPreTaxonomyFile()
+    # convert taxon names to IDs
+    idList <- convert2id(taxonList)
     # get taxonomy hierarchy list
-    taxStringList <- getHierarchy(idList, preProcessedTaxonomy)
-    # return selected rank names
-    outDfList <- lapply(
-        seq_len(length(taxStringList)),
-        function (x) {
-            tmp <- as.data.frame(taxStringList[[x]])
-            colnames(tmp) <- c("ori")
-            tmp_split <- tidyr::separate(
-                data = tmp, col = ori, into = c("name", "rank"), sep = "#"
-            )
-            tmp_reduced <- tmp_split[tmp_split$rank %in% c("name", ranks),]
-            outDf <- tidyr::spread(tmp_reduced, rank, name)
-            return(outDf)
-        }
-    )
-    finalDf <- data.table::rbindlist(outDfList, fill = TRUE)
-    finalDf <- finalDf[!duplicated(finalDf), ]
-    finalDf <- as.data.frame(finalDf)
-    finalDf$id <- idList
-    finalDf <- finalDf[, c("id", "name", ranks[ranks %in% colnames(finalDf)])]
-    return(finalDf)
-}
-
-#' Get defined taxonomy ranks for a list of taxon names
-#' @export
-#' @import tidyr
-#' @param nameList list of taxonomy names
-#' @param ranks list of defined ranks. If not given, all available ranks will
-#' be considered
-#' @return A dataframe contains input taxon names, their IDs and names of
-#' defined taxonomy ranks
-#' @author Vinh Tran {tran@bio.uni-frankfurt.de}
-#' @examples
-#' nameList <- c("Homo sapiens", "fungi", "mammalia", "Cryptococcus neoformans")
-#' ranks <- c("family", "class", "phylum", "kingdom")
-#' getRanks4Name(nameList, ranks)
-
-getRanks4Name <- function(nameList = NULL, ranks = NULL) {
-    if (is.null(nameList)) stop("No list of taxon names given!")
-    if (is.null(ranks)) ranks <- PhyloProfile::mainTaxonomyRank()
-    ori <- name <- NULL
-
-    preProcessedTaxonomy <- getPreTaxonomyFile()
-    # get taxonomy hierarchy list
-    idList <- preProcessedTaxonomy$ncbiID[
-        preProcessedTaxonomy$fullName %in% firstup(nameList)
-    ]
     taxStringList <- getHierarchy(idList, preProcessedTaxonomy)
     # return selected rank names
     outDfList <- lapply(

@@ -33,7 +33,7 @@ From the R terminal, enter:
 library(taxFun)
 ```
 
-to load *taxFun* package. 
+to load *taxFun* package.
 
 *taxFun* command has this structure
 ```r
@@ -54,17 +54,13 @@ These are the list of available functions in *taxFun* and their parameters
 | getAllTaxonomyRanks | None | A list of all available NCBI taxonomy ranks | None |
 | id2name | List of taxon IDs | A table containing input taxon IDs and their scientific names | None |
 | name2id | List of taxon names | A table containing input taxon names and their taxon IDs | None |
-| id2rank | List of taxon IDs | A table containing input taxon IDs and their taxonomy ranks | None |
-| name2rank | List of taxon names | A table containing input taxon names and their taxonomy ranks | None |
-| getRanks4Id | List of taxon IDs | A table containing input taxon IDs, their scientific names and the names of selected taxonomy ranks | `ranks` = list of selected taxonomy ranks (Optional: if not given, all possible taxonomy ranks will be considered) |
-| getRanks4Name | List of taxon names | A table containing input taxon names, their taxon IDs and the names of selected taxonomy ranks | `ranks` = list of selected taxonomy ranks (Optional: if not given, all possible taxonomy ranks will be considered) |
-| sortTaxonomyMatrix4Id | List of taxon IDs | A clustered taxonomy matrix, shorted by a selected reference species | `refspec` = specified reference species |
-| sortTaxonomyMatrix4Name | List of taxon names | A clustered taxonomy matrix, shorted by a selected reference species | `refspec` = specified reference species |
-| getTree4Id | List of taxon IDs | Tree file in newick format | `outgroup` = outgroup species for rooting (Optional) |
-| getTree4Name | List of taxon names | Tree file in newick format | `outgroup` = outgroup species for rooting (Optional) |
-| getRepresentative | coming soon | coming soon | coming soon |
+| getRank | List of taxon IDs or/and names | A table containing input taxa and their taxonomy ranks | None |
+| getRanks | List of taxon IDs or/and names | A table containing input taxon IDs, their scientific names and the names of selected taxonomy ranks | `ranks` = list of selected taxonomy ranks (Optional: if not given, all possible taxonomy ranks will be considered) |
+| sortTaxonomyMatrix | List of taxon IDs or/and names | A clustered taxonomy matrix, shorted by a selected reference species | `refspec` = specified reference species |
+| createTree | List of taxon IDs or/and names | Tree file in newick format | `outgroup` = outgroup species for rooting (Optional) |
+| getRepresentative | List of taxon IDs or/and names | A table containing list of sub-selected taxa and their taxonomy info | `rank` = selected rank used for sub-sampling. Each supertaxon of this rank will have one representative |
 
-*If not specified, output file will be saved as `input.*`*
+*If not specified, output file will be saved as `input.*`.*
 
 For example:
 
@@ -77,14 +73,16 @@ nameFile <- "inst/names.txt"
 taxFun("id2name", idFile)
 
 # get names of class, family and phylum for a list of given taxon names
-selectedRanks <- c("class", "family", "phylum")
-taxFun("getRanks4name", nameFile, ranks = selectedRanks)
+taxFun("getRanks", nameFile, ranks = c("class", "family", "phylum"))
 
 # create an aligned taxonomy hierarchies for a list of taxon IDs
-taxFun("sortTaxonomyMatrix4Id", idFile, refspec = "Homo sapiens")
+taxFun("sortTaxonomyMatrix", idFile, refspec = "Homo sapiens")
 
 # create taxonomy tree rooted by an outgroup species
-taxFun("getTree4Name", nameFile, outgroup = "Homo sapiens")
+taxFun("createTree", nameFile, outgroup = "Homo sapiens")
+
+# sub-sample taxa on phylum level
+taxFun("getRepresentative", idFile, rank = "phylum")
 
 ```
 

@@ -2,11 +2,12 @@
 #' @export
 #' @importFrom utils read.csv
 #' @importFrom ape write.tree
-#' @usage taxFun(fnName, inputListFile, ranks, refspec, outgroup, outputFile)
-#' @param fnName Function name, either "id2name", "name2id", "id2rank",
-#' "name2rank", "getRanks4Id", "getRanks4Name", "sortTaxonomyMatrix4Id",
-#' "sortTaxonomyMatrix4Name", "getTree4Id", "getTree4Name" or
-#' "getAllTaxonomyRanks"
+#' @usage taxFun(fnName, inputListFile, rank, ranks, refspec, outgroup,
+#' outputFile)
+#' @param fnName Function name, either "id2name", "name2id", "getRank", 
+#' "getRanks", "sortTaxonomyMatrix", "createTree", "getRepresentative", 
+#' or "getAllTaxonomyRanks"
+#' @param rank A selected taonomy rank (REQUIRED for some functions)
 #' @param ranks List of taxonomy ranks of interest (OPTIONAL)
 #' @param refspec Reference species (REQUIRED for some functions)
 #' @param outgroup Output species used for rooting the tree (OPTIONAL for tree
@@ -16,7 +17,6 @@
 #' <inputFile.out>
 #' @return Output file
 #' @examples
-#' \donttest{
 #' inputListId <- system.file(
 #'     "extdata", "ids.txt", package = "taxFun", mustWork = TRUE
 #' )
@@ -24,12 +24,14 @@
 #'     "extdata", "names.txt", package = "taxFun", mustWork = TRUE
 #' )
 #' taxFun("id2name", inputListId)
-#' taxFun("name2rank", inputListName)
-#' taxFun("getRanks4Name", inputListName, ranks = c("class", "phylum"))
-#' }
+#' taxFun("getRank", inputListName)
+#' taxFun("getRanks", inputListName, ranks = c("class", "phylum"))
+#' taxFun("createTree", inputListName, outgroup = 9606)
+#' taxFun("sortTaxonomyMatrix", inputListId, refspec = "Homo sapiens")
+#' taxFun("getRepresentative", inputListId, rank = "phylum")
 
 taxFun <- function(
-    fnName = NULL, inputListFile = NULL,
+    fnName = NULL, inputListFile = NULL, rank = NULL,
     ranks = NULL, refspec = NULL, outgroup = NULL,
     outputFile = NULL
 ) {
@@ -55,29 +57,15 @@ taxFun <- function(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
-    } else if (fnName == "id2rank") {
-        outDf <- id2rank(inputList)
+    } else if (fnName == "getRank") {
+        outDf <- getRank(inputList)
         if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".2rank")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
-    } else if (fnName == "name2rank") {
-        outDf <- name2rank(inputList)
-        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".2rank")
-        write.table(
-            outDf, file = outputFile,
-            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
-        )
-    } else if (fnName == "getRanks4Id") {
-        outDf <- getRanks4Id(inputList, ranks)
-        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".ranks")
-        write.table(
-            outDf, file = outputFile,
-            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
-        )
-    } else if (fnName == "getRanks4Name") {
-        outDf <- getRanks4Name(inputList, ranks)
+    } else if (fnName == "getRanks") {
+        outDf <- getRanks(inputList, ranks)
         if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".ranks")
         write.table(
             outDf, file = outputFile,
@@ -90,30 +78,26 @@ taxFun <- function(
             outDf, file = outputFile,
             col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
-    } else if (fnName == "sortTaxonomyMatrix4Id") {
-        outDf <- sortTaxonomyMatrix4Id(inputList, refspec)
+    } else if (fnName == "sortTaxonomyMatrix") {
+        outDf <- sortTaxonomyMatrix(inputList, refspec)
         if (is.null(outputFile))
             outputFile <- paste0(inputListFile, ".sortedTaxonomyMatrix")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
-    } else if (fnName == "sortTaxonomyMatrix4Name") {
-        outDf <- sortTaxonomyMatrix4Name(inputList, refspec)
+    } else if (fnName == "createTree") {
+        outTree <- createTree(inputList, outgroup)
+        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".tree")
+        ape::write.tree(outTree, file = outputFile)
+    } else if (fnName == "getRepresentative") {
+        outDf <- getRepresentative(inputList, rank)
         if (is.null(outputFile))
-            outputFile <- paste0(inputListFile, ".sortedTaxonomyMatrix")
+            outputFile <- paste0(inputListFile, ".subSelected")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
-    } else if (fnName == "getTree4Id") {
-        outTree <- getTree4Id(inputList, outgroup)
-        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".tree")
-        ape::write.tree(outTree, file = outputFile)
-    } else if (fnName == "getTree4Name") {
-        outTree <- getTree4Name(inputList, outgroup)
-        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".tree")
-        ape::write.tree(outTree, file = outputFile)
     } else {
         stop("Wrong function name")
     }
