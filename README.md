@@ -59,6 +59,7 @@ These are the list of available functions in *taxFun* and their parameters
 | sortTaxonomyMatrix | List of taxon IDs or/and names | A clustered taxonomy matrix, shorted by a selected reference species | `refspec` = specified reference species |
 | createTree | List of taxon IDs or/and names | Tree file in newick format | `outgroup` = outgroup species for rooting (Optional) |
 | getRepresentative | List of taxon IDs or/and names | A table containing list of sub-selected taxa and their taxonomy info | `rank` = selected rank used for sub-sampling. Each supertaxon of this rank will have one representative |
+| getClade | List of taxon IDs or/and names | Subset of taxa that belong to a specified taxonomy clade | `supertaxon` = clade ID or name |
 
 *If not specified, output file will be saved as `input.*`.*
 
@@ -83,6 +84,10 @@ taxFun("createTree", nameFile, outgroup = "Homo sapiens")
 
 # sub-sample taxa on phylum level
 taxFun("getRepresentative", idFile, rank = "phylum")
+
+
+# get all metazoa
+taxFun("getClade", idFile, supertaxon = "metazoa")
 
 ```
 
