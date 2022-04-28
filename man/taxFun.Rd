@@ -4,13 +4,13 @@
 \alias{taxFun}
 \title{Run taxFun}
 \usage{
-taxFun(fnName, inputListFile, rank, ranks, refspec, outgroup,
-outputFile)
+taxFun(fnName, inputListFile, rank, ranks, refspec, supertaxon, 
+outgroup, outputFile)
 }
 \arguments{
 \item{fnName}{Function name, either "id2name", "name2id", "getRank", 
 "getRanks", "sortTaxonomyMatrix", "createTree", "getRepresentative", 
-or "getAllTaxonomyRanks"}
+"getClade" or "getAllTaxonomyRanks"}
 
 \item{inputListFile}{Location of input file (list of taxon names or ids)}
 
@@ -19,6 +19,8 @@ or "getAllTaxonomyRanks"}
 \item{ranks}{List of taxonomy ranks of interest (OPTIONAL)}
 
 \item{refspec}{Reference species (REQUIRED for some functions)}
+
+\item{supertaxon}{Supertaxon name or ID (REQUIRED for some functions)}
 
 \item{outgroup}{Output species used for rooting the tree (OPTIONAL for tree
 functions)}
@@ -45,4 +47,5 @@ taxFun("getRanks", inputListName, ranks = c("class", "phylum"))
 taxFun("createTree", inputListName, outgroup = 9606)
 taxFun("sortTaxonomyMatrix", inputListId, refspec = "Homo sapiens")
 taxFun("getRepresentative", inputListId, rank = "phylum")
+taxFun("getClade", inputListId, supertaxon = "metazoa")
 }

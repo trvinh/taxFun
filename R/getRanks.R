@@ -71,7 +71,7 @@ getHierarchy <- function(inputTaxa = NULL, currentNCBIinfo = NULL){
 
 #' Get defined taxonomy ranks for a list of taxa
 #' @export
-#' @import tidyr
+#' @importFrom tidyr separate spread
 #' @param taxonList list of taxa
 #' @param ranks list of defined ranks. If not given, all available ranks will
 #' be considered

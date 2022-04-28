@@ -85,7 +85,6 @@ taxFun("createTree", nameFile, outgroup = "Homo sapiens")
 # sub-sample taxa on phylum level
 taxFun("getRepresentative", idFile, rank = "phylum")
 
-
 # get all metazoa
 taxFun("getClade", idFile, supertaxon = "metazoa")
 

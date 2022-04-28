@@ -2,14 +2,15 @@
 #' @export
 #' @importFrom utils read.csv
 #' @importFrom ape write.tree
-#' @usage taxFun(fnName, inputListFile, rank, ranks, refspec, outgroup,
-#' outputFile)
+#' @usage taxFun(fnName, inputListFile, rank, ranks, refspec, supertaxon, 
+#' outgroup, outputFile)
 #' @param fnName Function name, either "id2name", "name2id", "getRank", 
 #' "getRanks", "sortTaxonomyMatrix", "createTree", "getRepresentative", 
-#' or "getAllTaxonomyRanks"
+#' "getClade" or "getAllTaxonomyRanks"
 #' @param rank A selected taonomy rank (REQUIRED for some functions)
 #' @param ranks List of taxonomy ranks of interest (OPTIONAL)
 #' @param refspec Reference species (REQUIRED for some functions)
+#' @param supertaxon Supertaxon name or ID (REQUIRED for some functions)
 #' @param outgroup Output species used for rooting the tree (OPTIONAL for tree
 #' functions)
 #' @param inputListFile Location of input file (list of taxon names or ids)
@@ -29,11 +30,12 @@
 #' taxFun("createTree", inputListName, outgroup = 9606)
 #' taxFun("sortTaxonomyMatrix", inputListId, refspec = "Homo sapiens")
 #' taxFun("getRepresentative", inputListId, rank = "phylum")
+#' taxFun("getClade", inputListId, supertaxon = "metazoa")
 
 taxFun <- function(
-    fnName = NULL, inputListFile = NULL, rank = NULL,
-    ranks = NULL, refspec = NULL, outgroup = NULL,
-    outputFile = NULL
+    fnName = NULL, inputListFile = NULL, 
+    rank = NULL, ranks = NULL, refspec = NULL, supertaxon = NULL, 
+    outgroup = NULL, outputFile = NULL
 ) {
     if (is.null(inputListFile)) stop("No input file given!")
     ### load input
@@ -93,7 +95,15 @@ taxFun <- function(
     } else if (fnName == "getRepresentative") {
         outDf <- getRepresentative(inputList, rank)
         if (is.null(outputFile))
-            outputFile <- paste0(inputListFile, ".subSelected")
+            outputFile <- paste0(inputListFile, ".representative")
+        write.table(
+            outDf, file = outputFile,
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
+        )
+    } else if (fnName == "getClade") {
+        outDf <- getClade(inputList, supertaxon)
+        if (is.null(outputFile))
+            outputFile <- paste0(inputListFile, ".subselected")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
