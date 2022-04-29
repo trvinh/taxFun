@@ -1,5 +1,8 @@
 # taxFun
 
+[![License: GPL v3](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/trvinh/taxFun/blob/master/LICENSE)
+![Github Build](https://github.com/trvinh/taxFun/workflows/build/badge.svg)
+
 *taxFun* is an R package that provides functions for working with NCBI taxonomy IDs and names.
 
 # Table of Contents
