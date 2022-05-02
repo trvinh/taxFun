@@ -62,11 +62,21 @@ getClade <- function(taxonList = NULL, supertaxon = NULL) {
     # convert taxon list and supertaxon into IDs
     idList <- convert2id(taxonList)
     supertaxonID <- convert2id(supertaxon)
+    if (length(supertaxonID) > 1) {
+        warning(
+            paste(
+                "More than 1 ID for", supertaxon, "has been found.",
+                "Only the first one", supertaxonID[1], "will be used!"
+            )
+        )
+        print(name2id(supertaxon))
+    }
+        
     # create taxonomy matrix
     taxMatrix <- createTaxonomyMatrix(idList)
     # get all taxa belong to supertaxon
     outDf <- taxMatrix[
-        c(rownames(which(taxMatrix == supertaxonID, arr.ind=TRUE))), 
+        c(rownames(which(taxMatrix == supertaxonID[1], arr.ind=TRUE))), 
         c("fullName", "ncbiID")
     ]
     return(outDf)
