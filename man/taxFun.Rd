@@ -4,15 +4,15 @@
 \alias{taxFun}
 \title{Run taxFun}
 \usage{
-taxFun(fnName, inputListFile, rank, ranks, refspec, supertaxon, 
+taxFun(fnName, inputTaxaFile, rank, ranks, refspec, supertaxon, 
 outgroup, outputFile)
 }
 \arguments{
 \item{fnName}{Function name, either "id2name", "name2id", "getRank", 
 "getRanks", "sortTaxonomyMatrix", "createTree", "getRepresentative", 
-"getClade" or "getAllTaxonomyRanks"}
+"getClade", "getLCA" or "getAllTaxonomyRanks"}
 
-\item{inputListFile}{Location of input file (list of taxon names or ids)}
+\item{inputTaxaFile}{Location of input taxa file (taxon names or/and ids)}
 
 \item{rank}{A selected taonomy rank (REQUIRED for some functions)}
 
@@ -35,17 +35,18 @@ Output file
 Run taxFun
 }
 \examples{
-inputListId <- system.file(
+inputTaxonIDs <- system.file(
     "extdata", "ids.txt", package = "taxFun", mustWork = TRUE
 )
-inputListName <- system.file(
+inputTaxonNames <- system.file(
     "extdata", "names.txt", package = "taxFun", mustWork = TRUE
 )
-taxFun("id2name", inputListId)
-taxFun("getRank", inputListName)
-taxFun("getRanks", inputListName, ranks = c("class", "phylum"))
-taxFun("createTree", inputListName, outgroup = 9606)
-taxFun("sortTaxonomyMatrix", inputListId, refspec = "Homo sapiens")
-taxFun("getRepresentative", inputListId, rank = "phylum")
-taxFun("getClade", inputListId, supertaxon = "metazoa")
+taxFun("id2name", inputTaxonIDs)
+taxFun("getRank", inputTaxonNames)
+taxFun("getRanks", inputTaxonNames, ranks = c("class", "phylum"))
+taxFun("createTree", inputTaxonNames, outgroup = 9606)
+taxFun("sortTaxonomyMatrix", inputTaxonIDs, refspec = "Homo sapiens")
+taxFun("getRepresentative", inputTaxonIDs, rank = "phylum")
+taxFun("getClade", inputTaxonIDs, supertaxon = "metazoa")
+taxFun("getLCA", inputTaxonNames)
 }

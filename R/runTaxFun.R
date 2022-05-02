@@ -2,73 +2,74 @@
 #' @export
 #' @importFrom utils read.csv
 #' @importFrom ape write.tree
-#' @usage taxFun(fnName, inputListFile, rank, ranks, refspec, supertaxon, 
+#' @usage taxFun(fnName, inputTaxaFile, rank, ranks, refspec, supertaxon, 
 #' outgroup, outputFile)
 #' @param fnName Function name, either "id2name", "name2id", "getRank", 
 #' "getRanks", "sortTaxonomyMatrix", "createTree", "getRepresentative", 
-#' "getClade" or "getAllTaxonomyRanks"
+#' "getClade", "getLCA" or "getAllTaxonomyRanks"
 #' @param rank A selected taonomy rank (REQUIRED for some functions)
 #' @param ranks List of taxonomy ranks of interest (OPTIONAL)
 #' @param refspec Reference species (REQUIRED for some functions)
 #' @param supertaxon Supertaxon name or ID (REQUIRED for some functions)
 #' @param outgroup Output species used for rooting the tree (OPTIONAL for tree
 #' functions)
-#' @param inputListFile Location of input file (list of taxon names or ids)
+#' @param inputTaxaFile Location of input taxa file (taxon names or/and ids)
 #' @param outputFile Location of output file. If not given, it will be saved as
 #' <inputFile.out>
 #' @return Output file
 #' @examples
-#' inputListId <- system.file(
+#' inputTaxonIDs <- system.file(
 #'     "extdata", "ids.txt", package = "taxFun", mustWork = TRUE
 #' )
-#' inputListName <- system.file(
+#' inputTaxonNames <- system.file(
 #'     "extdata", "names.txt", package = "taxFun", mustWork = TRUE
 #' )
-#' taxFun("id2name", inputListId)
-#' taxFun("getRank", inputListName)
-#' taxFun("getRanks", inputListName, ranks = c("class", "phylum"))
-#' taxFun("createTree", inputListName, outgroup = 9606)
-#' taxFun("sortTaxonomyMatrix", inputListId, refspec = "Homo sapiens")
-#' taxFun("getRepresentative", inputListId, rank = "phylum")
-#' taxFun("getClade", inputListId, supertaxon = "metazoa")
+#' taxFun("id2name", inputTaxonIDs)
+#' taxFun("getRank", inputTaxonNames)
+#' taxFun("getRanks", inputTaxonNames, ranks = c("class", "phylum"))
+#' taxFun("createTree", inputTaxonNames, outgroup = 9606)
+#' taxFun("sortTaxonomyMatrix", inputTaxonIDs, refspec = "Homo sapiens")
+#' taxFun("getRepresentative", inputTaxonIDs, rank = "phylum")
+#' taxFun("getClade", inputTaxonIDs, supertaxon = "metazoa")
+#' taxFun("getLCA", inputTaxonNames)
 
 taxFun <- function(
-    fnName = NULL, inputListFile = NULL, 
+    fnName = NULL, inputTaxaFile = NULL, 
     rank = NULL, ranks = NULL, refspec = NULL, supertaxon = NULL, 
     outgroup = NULL, outputFile = NULL
 ) {
-    if (is.null(inputListFile)) stop("No input file given!")
+    if (is.null(inputTaxaFile)) stop("No input file given!")
     ### load input
     inputListDf <- read.csv(
-        inputListFile, stringsAsFactors = FALSE, header = FALSE
+        inputTaxaFile, stringsAsFactors = FALSE, header = FALSE
     )
     inputList <- inputListDf$V1
 
     ### perform function
     if (fnName == "id2name") {
         outDf <- id2name(inputList)
-        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".2name")
+        if (is.null(outputFile)) outputFile <- paste0(inputTaxaFile, ".2name")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
     } else if (fnName == "name2id") {
         outDf <- name2id(inputList)
-        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".2id")
+        if (is.null(outputFile)) outputFile <- paste0(inputTaxaFile, ".2id")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
     } else if (fnName == "getRank") {
         outDf <- getRank(inputList)
-        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".2rank")
+        if (is.null(outputFile)) outputFile <- paste0(inputTaxaFile, ".2rank")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
     } else if (fnName == "getRanks") {
         outDf <- getRanks(inputList, ranks)
-        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".ranks")
+        if (is.null(outputFile)) outputFile <- paste0(inputTaxaFile, ".ranks")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
@@ -83,19 +84,19 @@ taxFun <- function(
     } else if (fnName == "sortTaxonomyMatrix") {
         outDf <- sortTaxonomyMatrix(inputList, refspec)
         if (is.null(outputFile))
-            outputFile <- paste0(inputListFile, ".sortedTaxonomyMatrix")
+            outputFile <- paste0(inputTaxaFile, ".sortedTaxonomyMatrix")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
         )
     } else if (fnName == "createTree") {
         outTree <- createTree(inputList, outgroup)
-        if (is.null(outputFile)) outputFile <- paste0(inputListFile, ".tree")
+        if (is.null(outputFile)) outputFile <- paste0(inputTaxaFile, ".tree")
         ape::write.tree(outTree, file = outputFile)
     } else if (fnName == "getRepresentative") {
         outDf <- getRepresentative(inputList, rank)
         if (is.null(outputFile))
-            outputFile <- paste0(inputListFile, ".representative")
+            outputFile <- paste0(inputTaxaFile, ".representative")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
@@ -103,7 +104,16 @@ taxFun <- function(
     } else if (fnName == "getClade") {
         outDf <- getClade(inputList, supertaxon)
         if (is.null(outputFile))
-            outputFile <- paste0(inputListFile, ".subselected")
+            outputFile <- paste0(inputTaxaFile, ".subselected")
+        write.table(
+            outDf, file = outputFile,
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"
+        )
+    } else if (fnName == "getLCA") {
+        outDf <- getLCA(inputList)
+        print(outDf)
+        if (is.null(outputFile))
+            outputFile <- paste0(inputTaxaFile, ".lca")
         write.table(
             outDf, file = outputFile,
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t"

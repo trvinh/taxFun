@@ -63,7 +63,7 @@ These are the list of available functions in *taxFun* and their parameters
 | createTree | List of taxon IDs or/and names | Tree file in newick format | `outgroup` = outgroup species for rooting (Optional) |
 | getRepresentative | List of taxon IDs or/and names | A table containing list of sub-selected taxa and their taxonomy info | `rank` = selected rank used for sub-sampling. Each supertaxon of this rank will have one representative |
 | getClade | List of taxon IDs or/and names | Subset of taxa that belong to a specified taxonomy clade | `supertaxon` = clade ID or name |
-| getLCA (COMING SOON) | List of taxon IDs or/and names | Last common ancestor name and ID | None |
+| getLCA | List of taxon IDs or/and names | Last common ancestor name and ID | None |
 
 *If not specified, output file will be saved as `input.*`.*
 
@@ -92,13 +92,16 @@ taxFun("getRepresentative", idFile, rank = "phylum")
 # get all metazoa species
 taxFun("getClade", idFile, supertaxon = "metazoa")
 
+# get last common ancestor
+taxFun("getLCA", nameFile)
+
 ```
 
 # Bugs
-Any [bug reports or comments, suggestions](https://github.com/BIONF/PhyloProfile/blob/master/CONTRIBUTING.md) are highly appreciated. Please [open an issue on GitHub](https://github.com/BIONF/PhyloProfile/issues/new) or be in touch via email.
+Any [bug reports or comments, suggestions](https://github.com/trvinh/taxFun/blob/master/CONTRIBUTING.md) are highly appreciated. Please [open an issue on GitHub](https://github.com/trvinh/taxFun/issues/new) or be in touch via email.
 
 # License
-This tool is released under [MIT license](https://github.com/BIONF/PhyloProfile/blob/master/LICENSE).
+This tool is released under [MIT license](https://github.com/trvinh/taxFun/blob/master/LICENSE).
 
 # How-To Cite
 Use the citation function in R CMD to have it directly in BibTex or LaTeX format
