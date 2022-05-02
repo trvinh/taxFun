@@ -65,11 +65,9 @@ getClade <- function(taxonList = NULL, supertaxon = NULL) {
     # create taxonomy matrix
     taxMatrix <- createTaxonomyMatrix(idList)
     # get all taxa belong to supertaxon
-    outDf <- dplyr::filter(
-        taxMatrix, 
-        row.names(taxMatrix) %in% 
-            rownames(which(taxMatrix == supertaxonID, arr.ind=TRUE))
-    )
-    outDf <- outDf[, c("ncbiID", "fullName")]
+    outDf <- taxMatrix[
+        c(rownames(which(taxMatrix == supertaxonID, arr.ind=TRUE))), 
+        c("fullName", "ncbiID")
+    ]
     return(outDf)
 }
