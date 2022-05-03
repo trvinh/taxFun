@@ -29,37 +29,82 @@ knitr::opts_chunk$set(
 ```
 
 # Introduction
-Phylogenetic profiles capture the presence - absence pattern of genes across
-species (Pellegrini et al., 1999). The presence of an ortholog in a given
-species is often taken as evidence that also the corresponding function is
-represented (Lee et al., 2007). Moreover, if two genes agree in their
-phylogenetic profile, it can suggest that they functionally interact
-(Pellegrini et al., 1999). Phylogenetic profiles are therefore commonly used
-for tracing functional protein clusters or metabolic networks across species
-and through time. However, orthology inference is not error-free (Altenhoff
-et al., 2016), and orthology does not guarantee functional equivalence for
-two genes (Studer and Robinson-Rechavi, 2009). Therefore, phylogenetic
-profiles are often integrated with accessory information layers, such as
-sequence similarity, domain architecture similarity, or semantic similarity
-of Gene Ontology-term descriptions.
-
-Various approaches exist to visualize such profiles. However, there is still a
-shortage of tools that provide a comprehensive set of functions for the display,
-filtering and analysis of multi-layered phylogenetic profiles comprising
-hundreds of genes and taxa. To close this methodological gap, we present here
-**PhyloProfile**, an *R-based tool to visualize, explore and analyze
-multi-layered phylogenetic profiles*.
+WRITE SOMETHING HERE
 
 # How to install taxFun
 
+```{r}
+if (!requireNamespace("devtools"))
+    install.packages("devtools")
+devtools::install_github("trvinh/taxFun", INSTALL_opts = c('--no-lock'), build_vignettes = TRUE)
+```
 
+# Input and output
 
-# Input
+A text file containing list of taaxon IDs or names or a mix of them. For example:
 
+```
+Homo sapiens
+100226
+10090
+10116
+1111708
+Xenopus tropicalis
+122586
+13616
+164328
+184922
+```
+
+*taxFun* will return the result in a (tab-delimited) text file. *If not specified in the command, output file will be saved as `input.*` by default.*
 
 # Features and capabilities
 
+| Function name | <img width=400/>Main input | <img width=400/>Output | Other options |
+|---|---|---|---|
+| getAllTaxonomyRanks | None | A list of all available NCBI taxonomy ranks | None |
+| id2name | List of taxon IDs | A table containing input taxon IDs and their scientific names | None |
+| name2id | List of taxon names | A table containing input taxon names and their taxon IDs | None |
+| getRank | List of taxon IDs or/and names | A table containing input taxa and their taxonomy ranks | None |
+| getRanks | List of taxon IDs or/and names | A table containing input taxon IDs, their scientific names and the names of selected taxonomy ranks | `ranks` = list of selected taxonomy ranks (Optional: if not given, all possible taxonomy ranks will be considered) |
+| sortTaxonomyMatrix | List of taxon IDs or/and names | A clustered taxonomy matrix, shorted by a selected reference species | `refspec` = specified reference species |
+| createTree | List of taxon IDs or/and names | Tree file in newick format | `outgroup` = outgroup species for rooting (Optional) |
+| getRepresentative | List of taxon IDs or/and names | A table containing list of sub-selected taxa and their taxonomy info | `rank` = selected rank used for sub-sampling. Each supertaxon of this rank will have one representative |
+| getClade | List of taxon IDs or/and names | Subset of taxa that belong to a specified taxonomy clade | `supertaxon` = clade ID or name |
+| getLCA | List of taxon IDs or/and names | Last common ancestor name and ID | None |
+
 # Examples
+
+```{r}
+# specify list of taxon IDs or taxon names
+idFile <- system.file(
+    "extdata", "ids.txt", package = "taxFun", mustWork = TRUE
+)
+nameFile <- system.file(
+    "extdata", "names.txt", package = "taxFun", mustWork = TRUE
+)
+
+# convert IDs to names
+taxFun("id2name", idFile)
+
+# get names of class, family and phylum for a list of given taxon names
+taxFun("getRanks", nameFile, ranks = c("class", "family", "phylum"))
+
+# create an aligned taxonomy hierarchies for a list of taxon IDs
+taxFun("sortTaxonomyMatrix", idFile, refspec = "Homo sapiens")
+
+# create taxonomy tree rooted by an outgroup species
+taxFun("createTree", nameFile, outgroup = "Homo sapiens")
+
+# sub-sample taxa on phylum level
+taxFun("getRepresentative", idFile, rank = "phylum")
+
+# get all metazoa species
+taxFun("getClade", idFile, supertaxon = "metazoa")
+
+# get last common ancestor
+taxFun("getLCA", nameFile)
+```
 
 **More examples? Please tell us what you want to see ;-)**
 
