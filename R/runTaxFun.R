@@ -5,8 +5,8 @@
 #' @usage taxFun(fnName, inputTaxaFile, rank, ranks, refspec, supertaxon, 
 #' outgroup, outputFile)
 #' @param fnName Function name, either "id2name", "name2id", "getRank", 
-#' "getRanks", "sortTaxonomyMatrix", "createTree", "getRepresentative", 
-#' "getClade", "getLCA" or "getAllTaxonomyRanks"
+#' "getRanks", "sortTaxonomyMatrix", "createTree", "createTreeSlow",
+#' "getRepresentative", "getClade", "getLCA" or "getAllTaxonomyRanks"
 #' @param rank A selected taonomy rank (REQUIRED for some functions)
 #' @param ranks List of taxonomy ranks of interest (OPTIONAL)
 #' @param refspec Reference species (REQUIRED for some functions)
@@ -91,6 +91,10 @@ taxFun <- function(
         )
     } else if (fnName == "createTree") {
         outTree <- createTree(inputList, outgroup)
+        if (is.null(outputFile)) outputFile <- paste0(inputTaxaFile, ".tree")
+        ape::write.tree(outTree, file = outputFile)
+    } else if (fnName == "createTreeSlow") {
+        outTree <- createTreeSlow(inputList, outgroup)
         if (is.null(outputFile)) outputFile <- paste0(inputTaxaFile, ".tree")
         ape::write.tree(outTree, file = outputFile)
     } else if (fnName == "getRepresentative") {

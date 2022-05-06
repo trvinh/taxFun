@@ -2,6 +2,7 @@
 
 export(createTaxonomyMatrix)
 export(createTree)
+export(createTreeSlow)
 export(getAllTaxonomyRanks)
 export(getClade)
 export(getLCA)

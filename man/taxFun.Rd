@@ -9,8 +9,8 @@ outgroup, outputFile)
 }
 \arguments{
 \item{fnName}{Function name, either "id2name", "name2id", "getRank", 
-"getRanks", "sortTaxonomyMatrix", "createTree", "getRepresentative", 
-"getClade", "getLCA" or "getAllTaxonomyRanks"}
+"getRanks", "sortTaxonomyMatrix", "createTree", "createTreeSlow",
+"getRepresentative", "getClade", "getLCA" or "getAllTaxonomyRanks"}
 
 \item{inputTaxaFile}{Location of input taxa file (taxon names or/and ids)}
 

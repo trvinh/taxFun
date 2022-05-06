@@ -33,7 +33,7 @@ WRITE SOMETHING HERE
 
 # How to install taxFun
 
-```{r}
+```
 if (!requireNamespace("devtools"))
     install.packages("devtools")
 devtools::install_github("trvinh/taxFun", INSTALL_opts = c('--no-lock'), build_vignettes = TRUE)
