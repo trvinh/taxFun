@@ -50,18 +50,17 @@ sortTaxonomyMatrix <- function(taxonList = NULL, refspec = NULL) {
     ncbiID <- fullName <- NULL
     # convert taxon list and refspec to IDs
     idList <- convert2id(taxonList)
-    refspec <- convert2name(refspec)
+    refspecID <- convert2id(refspec)
     # create taxonomy matrix
     taxMatrix <- createTaxonomyMatrix(idList)
     # sort taxonomy matrix
-    repTaxon <- taxMatrix[taxMatrix$fullName == refspec, ][1, ]
-    distDf <- subset(taxMatrix, select = -c(ncbiID, fullName))
-    row.names(distDf) <- distDf$abbrName
-    distDf <- distDf[, -1]
-    taxaTree <- PhyloProfile::createRootedTree(
-        distDf, as.character(repTaxon$abbrName)
+    repTaxon <- taxMatrix[taxMatrix$ncbiID == refspecID, ][1, ]
+    unrootedTaxaTree <- PhyloProfile::createUnrootedTree(taxMatrix)
+    rootedTree <- ape::root(
+        unrootedTaxaTree, outgroup = as.character(repTaxon$abbrName), 
+        resolve.root = TRUE
     )
-    taxonList <- PhyloProfile::sortTaxaFromTree(taxaTree)
+    taxonList <- PhyloProfile::sortTaxaFromTree(rootedTree)
     sortedTaxMatrix <- taxMatrix[match(taxonList, taxMatrix$abbrName), ]
     selectedCols <- c(
         "fullName",

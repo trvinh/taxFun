@@ -8,11 +8,6 @@ knitr::opts_chunk$set(
 )
 
 ## -----------------------------------------------------------------------------
-if (!requireNamespace("devtools"))
-    install.packages("devtools")
-devtools::install_github("trvinh/taxFun", INSTALL_opts = c('--no-lock'), build_vignettes = TRUE)
-
-## -----------------------------------------------------------------------------
 # specify list of taxon IDs or taxon names
 idFile <- system.file(
     "extdata", "ids.txt", package = "taxFun", mustWork = TRUE
